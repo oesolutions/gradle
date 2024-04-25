@@ -18,6 +18,7 @@ package org.gradle.api.internal.provider.sources;
 
 import org.gradle.api.file.RegularFile;
 import org.gradle.api.file.RegularFileProperty;
+import org.gradle.api.provider.Property;
 import org.gradle.api.provider.ValueSource;
 import org.gradle.api.provider.ValueSourceParameters;
 
@@ -28,6 +29,8 @@ public abstract class FileContentValueSource<T> implements ValueSource<T, FileCo
 
     public interface Parameters extends ValueSourceParameters {
         RegularFileProperty getFile();
+
+        Property<String> getEncoding();
     }
 
     @Nullable
@@ -41,8 +44,8 @@ public abstract class FileContentValueSource<T> implements ValueSource<T, FileCo
         if (!file.isFile()) {
             return null;
         }
-        return obtainFrom(file);
+        return obtainFrom(file, getParameters().getEncoding().getOrNull());
     }
 
-    protected abstract T obtainFrom(File file);
+    protected abstract T obtainFrom(File file, String charset);
 }

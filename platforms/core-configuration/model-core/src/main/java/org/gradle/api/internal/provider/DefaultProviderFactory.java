@@ -43,6 +43,7 @@ import org.gradle.process.ExecSpec;
 import org.gradle.process.JavaExecSpec;
 
 import javax.annotation.Nullable;
+import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.function.BiFunction;
@@ -175,6 +176,22 @@ public class DefaultProviderFactory implements ProviderFactory {
                 return of(
                     FileTextValueSource.class,
                     spec -> setFileProperty.execute(spec.getParameters().getFile())
+                );
+            }
+
+            @Override
+            public Provider<String> getAsText(Charset encoding) {
+                return getAsText(encoding.name());
+            }
+
+            @Override
+            public Provider<String> getAsText(String encoding) {
+                return of(
+                    FileTextValueSource.class,
+                    spec -> {
+                        setFileProperty.execute(spec.getParameters().getFile());
+                        spec.getParameters().getEncoding().set(encoding);
+                    }
                 );
             }
 
