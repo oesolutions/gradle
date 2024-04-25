@@ -18,6 +18,8 @@ package org.gradle.api.file;
 
 import org.gradle.api.provider.Provider;
 
+import java.nio.charset.Charset;
+
 /**
  * Provides lazy access to the contents of a given file.
  *
@@ -46,6 +48,10 @@ public interface FileContents {
      * @return provider of the entire file contents as a single String.
      */
     Provider<String> getAsText();
+
+    Provider<String> getAsText(Charset encoding);
+
+    Provider<String> getAsText(String encoding);
 
     /**
      * Gets a provider of the entire file contents as a single byte array.

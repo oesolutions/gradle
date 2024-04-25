@@ -25,7 +25,7 @@ import java.nio.file.Files;
 public abstract class FileBytesValueSource extends FileContentValueSource<byte[]> {
 
     @Override
-    protected byte[] obtainFrom(File file) {
+    protected byte[] obtainFrom(File file, String encoding) {
         try {
             return Files.readAllBytes(file.toPath());
         } catch (IOException e) {

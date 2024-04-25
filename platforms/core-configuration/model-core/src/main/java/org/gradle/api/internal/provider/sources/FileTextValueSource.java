@@ -23,7 +23,7 @@ import static org.gradle.util.internal.GFileUtils.readFile;
 public abstract class FileTextValueSource extends FileContentValueSource<String> {
 
     @Override
-    protected String obtainFrom(File file) {
-        return readFile(file);
+    protected String obtainFrom(File file, String encoding) {
+        return readFile(file, encoding);
     }
 }
